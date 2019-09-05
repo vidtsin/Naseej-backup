@@ -1,0 +1,38 @@
+<odoo>
+  <data>
+    <record id="stock_picking_type_naseej_inherit_f2" model="ir.ui.view">
+        <field name="name">stock_picking_type_naseej_inherit_f2</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form"/>
+        <field name="arch" type="xml">
+
+          <field name="show_reserved" position="after">
+            <field name="for_pos"/>
+          </field>
+
+          <field name="return_picking_type_id" position="after">
+            <field name="pos_operation_type" attrs="{'invisible':[('for_pos','=',False)]}"/>
+          </field>
+        </field>
+    </record>
+
+      <record id="stock_picking_naseej_inherit_f2" model="ir.ui.view">
+        <field name="name">stock_picking_naseej_inherit_f2</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+              <field name="after_click_button_generate" invisible="1"/>
+                <field name="pos_ch" invisible="1"/>
+            </field>
+
+          <button name="action_cancel" position="after">
+            <button name="update_button" string="Update Data" class="oe_highlight"
+                    type="object"
+                    attrs="{'invisible':['|','|','|',('state','not in',('done')),('after_click_button_generate','=',True),('pos_ch','=',False)]}"/>
+          </button>
+
+        </field>
+    </record>
+  </data>
+</odoo>

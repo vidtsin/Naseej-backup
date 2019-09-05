@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_naseej_inv_f2_naseej_inv_f2,naseej_inv_f2.naseej_inv_f2,model_naseej_inv_f2_naseej_inv_f2,,1,0,0,0

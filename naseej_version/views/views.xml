@@ -1,0 +1,85 @@
+<odoo>
+    <data>
+
+
+        <!--        template for adding auto increment field (for internal reference and first serial copy field in variants)-->
+        <record id="serial_for_variant_products_unique" model="ir.sequence">
+            <field name="name">Serial_no</field>
+            <field name="code">increment_id_of_serial_of_reports_forms</field>
+            <field name="prefix"></field>
+            <field name="padding">4</field>
+        </record>
+
+
+        <!--        inherit product variants to add first serial copy field -->
+        <record id="inherit_product_variants_to_add_first_serial_copy_field_naseej" model="ir.ui.view">
+            <field name="name">product_product_variants</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='default_code']" position="after">
+                    <!--                    <field name="fr_serial" />-->
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+        <record id="stock_move_only_form_view_inherit_naseej" model="ir.ui.view">
+            <field name="name">product_move_form</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_stock_move_operations"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='product_id']" position="before">
+                    <field name="internal_reference_code" readonly="True" invisible="1"/>
+                    <!--                    <field name="fr_serial_reference_copy"/>-->
+
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+        <!-- Inherit Form View of transfer in detailed operations wizzard to Modify it -->
+
+        <record id="editing_tree_inherit" model="ir.ui.view">
+            <field name="name">Stock</field>
+            <field name="model">stock.move.line</field>
+            <field name="priority">1000</field>
+            <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree"/>
+            <field name="arch" type="xml">
+                <field name="location_dest_id" position="after">
+                    <field name="first_serial"/>
+                    <field name="second_serial"/>
+                    <field name="third_serial"/>
+                </field>
+
+            </field>
+        </record>
+
+
+        <record id="cashadvance_seq" model="ir.sequence">
+            <field name="name">No_PD</field>
+            <field name="padding">1</field>
+            <field name="code">stockmoveline</field>
+        </record>
+
+
+        <!--        &lt;!&ndash;        template for adding auto increment field (for internal reference in variants)&ndash;&gt;-->
+        <!--        <record id="third_serial_for_inventory_transfer" model="ir.sequence">-->
+        <!--            <field name="name">third_Serial_no_incrementation</field>-->
+        <!--            <field name="code">increment_id_of_third_serial_of_inventory</field>-->
+        <!--            <field name="prefix"></field>-->
+        <!--            <field name="padding">2</field>-->
+        <!--            <field name="company_id" eval="False"/>-->
+        <!--        </record>-->
+
+
+    </data>
+</odoo>

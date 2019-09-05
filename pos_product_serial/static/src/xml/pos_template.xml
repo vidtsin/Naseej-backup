@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+
+    <t t-name="ProductSerials">
+        <div class="popup popup-text" style="width:600px;">
+            <header class="title"><t t-esc="options.title || '' " /></header>
+            <main class='packlot-lines'>
+
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-sm-12" style="background-color:rgba(136, 242, 222, 1);">
+
+                        <label for="sel1">WH/Location:</label>
+                          <select id="wh-loc"
+                                  style="width:250px;
+                                  height:40px;
+                                  background-color:rgba(136, 169, 242, 1);">
+                            <t t-if="locations">
+                                <t t-foreach="locations" t-as="loc">
+                                    <option t-att-value="loc.id" t-esc="loc.name"></option>
+                                </t>
+                            </t>
+                        </select>
+                      </div>
+                    </div>
+                      <br/>
+                      <div class="row">
+                      <div class="col-sm-12">
+                          <table style="width:100%;">
+                                <colgroup>
+                                    <col width='30%'/>
+                                    <col width='20%'/>
+                                    <col width='20%'/>
+                                    <col width='20%'/>
+                                    <col width='10%'/>
+                                </colgroup>
+                              <thead style="background-color:rgba(136, 242, 222, 1);">
+                                    <th>Lot/Serial</th>
+                                  <th>OnHand Qty</th>
+                                  <th>Reserved Qty</th>
+                                  <th>Available Qty</th>
+                                  <th>Select</th>
+                                </thead>
+                              <tbody class="orderlines-serials">
+                            </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+            </main>
+            <footer class="footer">
+                <div class="button confirm">
+                    Ok
+                </div>
+                <div class="button cancel">
+                    Cancel
+                </div>
+            </footer>
+        </div>
+    </t>
+
+
+    <t t-name="TableContent">
+        <t t-foreach="serials" t-as="quant">
+            <t t-if="quant.cid != 0">
+                <tr>
+                <td><span t-esc="quant.lot_name"></span></td>
+                    <td><span t-esc="quant.onhand_qty"></span></td>
+                    <td><span t-esc="quant.reserved_qty"></span></td>
+                    <td><span t-esc="quant.quantity"></span></td>
+                    <td><br/>
+                        <input type="checkbox"
+                               class="input-serial"
+                               t-att-value="quant.lot_name"
+                               t-att-cid="quant.cid"
+                               checked="checked"
+                               style="-webkit-box-shadow: 5px 5px 5px #666;
+                                   -moz-box-shadow: 5px 5px 5px #666;
+                                   box-shadow: 5px 5px 5px #666;"/>
+                </td>
+            </tr>
+            </t>
+            <t t-if="quant.cid == 0">
+                <tr>
+                <td><span t-esc="quant.lot_name"></span></td>
+                    <td><span t-esc="quant.onhand_qty"></span></td>
+                    <td><span t-esc="quant.reserved_qty"></span></td>
+                    <td><span t-esc="quant.quantity"></span></td>
+                    <td><br/>
+                        <input type="checkbox"
+                               class="input-serial"
+                               t-att-value="quant.lot_name"
+                               t-att-cid="quant.cid"
+                               style="-webkit-box-shadow: 5px 5px 5px #666;
+                                   -moz-box-shadow: 5px 5px 5px #666;
+                                   box-shadow: 5px 5px 5px #666;"/>
+                </td>
+            </tr>
+            </t>
+
+        </t>
+    </t>
+
+
+
+</templates>

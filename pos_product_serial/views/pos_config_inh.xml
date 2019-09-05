@@ -1,0 +1,40 @@
+<odoo>
+    <data>
+
+        <record id="tt_pos_config" model="ir.ui.view">
+            <field name="name">tt.pos.config</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@id='inventory_location']" position="inside">
+                    <div class="col-12 col-lg-6 o_setting_box"
+                         title="Operation types show up in the Inventory dashboard.">
+                        <div class="o_setting_right_pane">
+                            <label for="git_picking_type_id" string="Second Operation Type"/>
+                            <div class="text-muted">
+                                Second Operation type used to record product pickings
+                            </div>
+                            <div class="content-group mt16">
+                                <field name="git_picking_type_id" required="1"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box" groups="stock.group_stock_multi_locations">
+                        <div class="o_setting_right_pane">
+                            <label for="git_stock_location_id"/>
+                            <div class="text-muted">
+                                Second Stock location used for the inventory
+                            </div>
+                            <div>
+                                <field name="git_stock_location_id"/>
+                            </div>
+                        </div>
+                    </div>
+
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

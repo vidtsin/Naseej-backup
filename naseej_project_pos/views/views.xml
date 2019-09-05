@@ -1,0 +1,17 @@
+<odoo>
+  <data>
+    <record id="naseej_account_journal" model="ir.ui.view">
+      <field name="name">nassej.account.journal</field>
+      <field name="model">account.journal</field>
+      <field name="inherit_id" ref="account.view_account_journal_form"/>
+      <field name="arch" type="xml">
+
+        <field name="type" position="after">
+          <field name="payment_later"/>
+        </field>
+
+
+      </field>
+    </record>
+  </data>
+</odoo>

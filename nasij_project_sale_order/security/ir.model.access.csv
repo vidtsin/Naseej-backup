@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+shehata_size_group,shehata_size_group,model_product_size,shehata_tires_group,1,1,1,1
+shehata_brand_group,shehata_brand_group,model_product_brand,shehata_tires_group,1,1,1,1
+shehata_model_group,shehata_model_group,model_product_model,shehata_tires_group,1,1,1,1
+shehata_pattern_group,shehata_pattern_group,model_product_pattern,shehata_tires_group,1,1,1,1
+shehata_car_dimension_group,shehata_car_dimension_group,model_car_dimension,shehata_tires_group,1,1,1,1
+shehata_gient_dimension_group,shehata_gient_dimension_group,model_gient_dimension,shehata_tires_group,1,1,1,1
+
+

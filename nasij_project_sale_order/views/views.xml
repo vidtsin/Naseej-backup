@@ -1,0 +1,113 @@
+<odoo>
+  <data>
+    <record id="quotation_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+
+                <field name="state" position="attributes">
+                    <attribute name="statusbar_visible">draft,sent,waiting_approve,sale,approved,done,cancel,waiting,waiting_pro,start,finish,done_pro</attribute>
+                </field>
+
+                <button name="action_cancel" position="after">
+                  <button name="action_cancel" string="Cancel SO" states="waiting_approve"
+                        type="object" class="btn-primary" groups="nasij_project_sale_order.mangers_approval_group"/>
+
+                    <button name="approve" string="Approve" states="waiting_approve"
+                        type="object" class="btn-primary" groups="nasij_project_sale_order.mangers_approval_group"/>
+
+                  <button name="action_with_delivery" string="Production with Delivery" states="approved"
+                        type="object" class="btn-primary" groups="nasij_project_sale_order.mangers_approval_group"/>
+
+                <button name="action_without_delivery" string="Production without Delivery" states="approved"
+                        type="object" class="btn-primary" groups="nasij_project_sale_order.mangers_approval_group"/>
+
+              </button>
+
+                <field name="payment_term_id" position="after">
+                    <field name="not_available_lines" states="draft" groups="base.group_user"  invisible="1"/>
+                    <field name="vendor" states="done_pro" groups="base.group_user" domain="[('supplier','=',True)]"/>
+
+                    <field name="po_checked" states="done_pro" groups="base.group_user" invisible="1"/>
+                    <field name="po_btn_checked" states="done_pro" groups="base.group_user"  invisible="1"/>
+                </field>
+
+                <button name="preview_sale_order" position="after">
+                    <button name="action_waiting_pro_back" string="Back" states="start"
+                            type="object" class="btn-primary" groups="nasij_project_sale_order.mangers_approval_group"/>
+
+                    <button name="action_waiting_pro" string="Waiting Production" states="waiting"
+                            type="object" class="btn-primary" groups="nasij_project_sale_order.mangers_approval_group"/>
+
+                    <button name="action_waiting_back" string="Back" states="waiting_pro"
+                            type="object" class="btn-primary" groups="nasij_project_sale_order.mangers_approval_group"/>
+
+
+                    <button name="action_start" string="Start Production" states="waiting_pro"
+                            type="object" class="btn-primary" groups="nasij_project_sale_order.mangers_approval_group"/>
+
+                    <button name="action_finish" string="Finish Production" states="start"
+                            type="object" class="btn-primary" groups="nasij_project_sale_order.mangers_approval_group"/>
+
+                    <button name="action_start_back" string="Back" states="finish"
+                            type="object" class="btn-primary" groups="nasij_project_sale_order.mangers_approval_group"/>
+
+                    <button name="action_done_production" string="Done" states="finish"
+                            type="object" class="btn-primary" groups="nasij_project_sale_order.mangers_approval_group"/>
+
+                    <button name="action_create_po" string="Create PO" attrs="{'invisible': [('po_checked', '=',False)]}"
+                        type="object" class="oe_highlight"/>
+
+                </button>
+
+                <xpath expr="//button[@name='action_view_invoice']" position="after">
+                    <field name="po_ids" invisible="1"/>
+                    <button type="object" name="action_view_po"
+                            class="oe_stat_button" icon="fa-money"
+                            attrs="{'invisible': [('po_btn_checked', '=', False)]}"
+                            groups="base.group_user"
+                            string="Purchase">
+<!--                        <field name="po_count" widget="statinfo" />-->
+                    </button>
+                </xpath>
+
+                <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d']" position="replace">
+                    <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Invoice"
+                            states="done_pro,finish,start,waiting,sale,waiting_pro" type="action"
+                            class="btn-primary" attrs="{'invisible': [('invoice_status', '!=', 'to invoice')]}"/>
+                </xpath>
+            </field>
+    </record>
+
+    <record id="sale_order_view_search_inherit_nasij" model="ir.ui.view">
+        <field name="name">sale_order_search_inherit_nasij</field>
+        <field name="model">sale.order</field>
+<!--        <field name="mode">primary</field>-->
+        <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='sales']" position="after">
+                <filter string="Waiting Approve" name="waiting_approve" domain="[('state','in',('waiting_approve','done'))]"/>
+                <filter string="Approved" name="approved" domain="[('state','in',('approved','done'))]"/>
+                <filter string="Waiting Raw Material" name="waiting" domain="[('state','in',('waiting','done'))]"/>
+                <filter string="Waiting Production" name="waiting_pro" domain="[('state','in',('waiting_pro','done'))]"/>
+                <filter string="In Production" name="start" domain="[('state','in',('start','done'))]"/>
+                <filter string="In Finishing Production" name="finish" domain="[('state','in',('finish','done'))]"/>
+                <filter string="Complete" name="done_pro" domain="[('state','in',('done_pro','done'))]"/>
+            </xpath>
+
+            <xpath expr="//search/group/filter[@name='order_month']" position="after">
+                <filter string="Quotations" name="draft" domain="[('state','in',('draft', 'sent'))]" context="{'group_by':'state'}"/>
+                <filter string="Sales Orders" name="sales" domain="[('state','in',('sale','done'))]" context="{'group_by':'state'}"/>
+                <filter string="Waiting Approve" name="waiting_approve" domain="[('state','in',('waiting_approve','done'))]" context="{'group_by':'state'}"/>
+                <filter string="Approved" name="approved" domain="[('state','in',('approved','done'))]" context="{'group_by':'state'}"/>
+                <filter string="Waiting Raw Material" name="waiting" domain="[('state','in',('waiting','done'))]" context="{'group_by':'state'}"/>
+                <filter string="Waiting Production" name="waiting_pro" domain="[('state','in',('waiting_pro','done'))]" context="{'group_by':'state'}"/>
+                <filter string="In Production" name="start" domain="[('state','in',('start','done'))]" context="{'group_by':'state'}"/>
+                <filter string="In Finishing Production" name="finish" domain="[('state','in',('finish','done'))]" context="{'group_by':'state'}"/>
+                <filter string="Complete" name="done_pro" domain="[('state','in',('done_pro','done'))]" context="{'group_by':'state'}"/>
+            </xpath>
+        </field>
+    </record>
+  </data>
+</odoo>
